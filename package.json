@@ -1,0 +1,19 @@
+{
+	"name": "OmniLaunchMC",
+	"version": "1.0.0",
+	"description": "OmniLaunchMC",
+	"main": "index.html",
+    "dependencies": {
+        "less": "2.3.x",
+        "request": "2.53.x"
+    },
+	"window":
+	{
+        "show": false,
+        "position": "center",
+		"width": 800,
+		"height": 480,
+        "min_width": 400,
+        "min_height": 300
+	}
+}
