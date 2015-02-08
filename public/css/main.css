@@ -1,28 +1,39 @@
 @import url(roboto.css);
-
 body, html {
 	font-family: Roboto, sans-serif;
 	margin: 0;
 	padding: 0;
 	background-color: #263238;
+	overflow-x: hidden;
+}
+.clear {
+	clear: both;
 }
 .login {
 	background-color: #37474F;
-	color: #80CBC4;
+	color: white;
 	width: 100%;
-	max-width: 600px;
-	margin: 20px auto;
+	max-width: 800px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
 	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
 	border-radius: 2px;
 	-webkit-user-select: none;
 	cursor: default;
+	height: 400px;
+	box-sizing: border-box;
 }
 .login h1 {
+	color: #80CBC4;
 	text-align: center;
 	font-weight: 300;
 	margin: 0;
-	padding-bottom: 4px;
-	font-size: 2em;
+	padding: 8px 0;
+	font-size: 2.4em;
 }
 .login h2 {
 	text-align: center;
@@ -30,4 +41,84 @@ body, html {
 	margin: 0;
 	padding-bottom: 4px;
 	font-size: 1.4em;
+}
+.login .left {
+	float: left;
+	width: 50%;
+	border-right: 1px solid #263238;
+	box-sizing: border-box;
+	padding: 8px;
+	padding-bottom: 0;
+	margin-bottom: 8px;
+	position: absolute;
+	top: 60px;
+	bottom: 0;
+}
+.login .right {
+	float: right;
+	width: 50%;
+	box-sizing: border-box;
+	padding: 8px;
+	padding-bottom: 0;
+	margin-bottom: 8px;
+	position: absolute;
+	right: 0;
+	top: 60px;
+	bottom: 0;
+}
+.login .left input {
+	font-family: Roboto, sans-serif;
+	display: block;
+	width: 100%;
+	margin-bottom: 9px;
+	background-color: #455A64;
+	outline: none;
+	padding: 6px;
+	border: none;
+	color: white;
+	border-bottom: 1px solid #263238;
+}
+.login .left input:focus {
+	border-bottom: 2px solid #80CBC4;
+	margin-bottom: 8px;
+}
+.login .right #profiles
+{
+	height: 250px;
+	overflow-y: auto;
+}
+.login .right label {
+	display: block;
+	padding: 4px;
+}
+.login button {
+	font-family: Roboto, sans-serif;
+	display: block;
+	outline: none;
+	width: calc(100% - 16px);
+	padding: 8px 0;
+	border: none;
+	color: white;
+	background-color: #009688;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+	text-align: center;
+	cursor: pointer;
+	position: absolute;
+	bottom: 0;
+	box-sizing: border-box;
+}
+.login button:hover {
+	background-color: #26A69A;
+}
+::-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar-track {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.3);
 }
