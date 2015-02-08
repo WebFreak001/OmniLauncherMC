@@ -5,12 +5,12 @@ window.onload = function ()
 	try
 	{
 		// Init Script here
-		//main(function ()
-		//{
-		require("nw.gui")
-			.Window.get()
-			.show();
-		//});
+		main(function ()
+		{
+			require("nw.gui")
+				.Window.get()
+				.show();
+		});
 	}
 	catch (e)
 	{

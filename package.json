@@ -10,6 +10,7 @@
 	"window":
 	{
         "show": false,
+        "toolbar": false,
         "position": "center",
 		"width": 800,
 		"height": 480,
