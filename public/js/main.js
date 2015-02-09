@@ -28,18 +28,51 @@ function main(cb)
 
 		if (!config.minecraft.accessToken)
 		{
-			ajax("views/login.html", cb);
+			loadLogin(cb);
 		}
 		else
 		{
-			checkAccessToken(function (valid)
-			{
-				if (!valid)
-					ajax("views/login.html", cb);
-				else
-					ajax("views/modpacks.html", cb);
-			});
+			launch(cb);
 		}
+	});
+}
+
+function loadLogin(cb)
+{
+	ajax("views/login.html", function ()
+	{
+		if (config.users !=
+			{})
+		{
+			var first = true;
+			for (var k in config.users)
+			{
+				var user = config.users[k];
+				if (first)
+				{
+					$("#profiles")
+						.append("<label class='active'><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "' checked>" + user.name + "</label>");
+					first = false;
+				}
+				else
+				{
+					$("#profiles")
+						.append("<label><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "'>" + user.name + "</label>");
+				}
+			}
+		}
+		if (cb) cb();
+	});
+}
+
+function launch(cb)
+{
+	checkAccessToken(function (valid)
+	{
+		if (!valid)
+			loadLogin(cb);
+		else
+			ajax("views/modpacks.html", cb);
 	});
 }
 
@@ -72,6 +105,7 @@ function selectProfile(id)
 {
 	if (config.users[id])
 		config.minecraft = config.users[id];
+	save();
 }
 
 function generateAccessToken(username, password, cb)
@@ -97,20 +131,23 @@ function generateAccessToken(username, password, cb)
 			return;
 		}
 		config.users[body.selectedProfile.id] = {
-			display: body.selectedProfile.name,
+			name: body.selectedProfile.name,
 			uuid: body.selectedProfile.id,
 			accessToken: body.accessToken,
 			clientToken: body.clientToken,
 			username: username,
 			password: password
 		};
-		config.minecraft = config.users[body.selectedProfile.name];
+		config.minecraft = config.users[body.selectedProfile.id];
+		save();
 		if (cb) cb(true);
 	});
 }
 
 function load(cb)
 {
+	if (!fs.existsSync("config.json"))
+		fs.writeFileSync("config.json", "{}");
 	fs.readFile("config.json", function (err, data)
 	{
 		if (err) throw err;

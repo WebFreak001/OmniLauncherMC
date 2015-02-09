@@ -1,17 +1,17 @@
-<div class="login animated fadeInDown">
+<div id="login" class="login animated fadeInDown">
 	<h1>OmniLaunchMC</h1>
 	<div class="left">
 		<h2>Login using your Mojang account</h2>
 		<input type="text" id="username" placeholder="E-Mail">
 		<input type="password" id="password" placeholder="Password">
-		<div class="push"></div>
-		<button onclick="checkLogin()">Login</button>
+		<button onclick="generateAccessToken($('#username').val(), $('#password').val(), function(valid) { if(valid) { launch(); } else { alert('Incorrect credentials!'); } })">Login</button>
 	</div>
 	<div class="right">
 		<h2>Use an existing account</h2>
 		<div id="profiles">
 		</div>
-		<button onclick="selectProfile()">Play</button>
+		<button onclick="login($('input[name=\'profile\']:checked').val());">Play</button>
 	</div>
 	<div class="clear"></div>
 </div>
+<script src="public/js/login.js"></script>

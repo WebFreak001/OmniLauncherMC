@@ -1,0 +1,76 @@
+.modpacks {
+	width: 100%;
+	height: 100%;
+	background-color: #424242;
+}
+.modpacks .packs {
+	height: calc(100% - 40px);
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	background-color: #263238;
+}
+.modpacks .packs .preview {
+	float: right;
+	height: 100%;
+	width: calc(100% - 200px);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 8px;
+	background-color: #212121;
+}
+.modpacks .footer {
+	height: 40px;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	line-height: 40px;
+	background-color: #222d31;
+	color: white;
+}
+.modpacks .footer .left {
+	float: left;
+	padding: 0 8px;
+}
+.modpacks .footer .right {
+	float: right;
+	padding: 0 8px;
+}
+.modpacks .packs .left {
+	float: left;
+	width: 200px;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.modpacks .packs .left .pack {
+	height: 44px;
+	color: white;
+	padding: 0;
+	margin: 0;
+}
+
+.modpacks .packs .left .pack .text {
+	height: 44px;
+	float: right;
+	width: 140px;
+	line-height: 44px;
+	text-align: left;
+	color: white;
+	padding: 0;
+	margin: 0;
+	font-weight: 300;
+}
+
+.modpacks .packs .left .pack img {
+	width: 36px;
+	height: 36px;
+	margin: 4px 9px;
+	float: left;
+}

@@ -1,8 +1,10 @@
 @import url(roboto.css);
+@import url(modpacks.css);
 body, html {
 	font-family: Roboto, sans-serif;
 	margin: 0;
 	padding: 0;
+	height: 100%;
 	background-color: #263238;
 	overflow-x: hidden;
 }
@@ -76,11 +78,16 @@ body, html {
 	padding: 6px;
 	border: none;
 	color: white;
+	box-sizing: border-box;
 	border-bottom: 1px solid #263238;
 }
 .login .left input:focus {
 	border-bottom: 2px solid #80CBC4;
 	margin-bottom: 8px;
+}
+.login .right input
+{
+	display: none;
 }
 .login .right #profiles
 {
@@ -90,6 +97,12 @@ body, html {
 .login .right label {
 	display: block;
 	padding: 4px;
+	cursor: pointer;
+}
+.login .right label.active {
+	background-color: #455A64;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+	color: white;
 }
 .login button {
 	font-family: Roboto, sans-serif;
