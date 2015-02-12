@@ -8,38 +8,31 @@ function auth(save)
 	{
 		loginButton.start();
 		isAuthing = true;
-		generateAccessToken(save, $('#username')
-			.val(), $('#password')
-			.val(),
-			function (valid)
+		generateAccessToken(save, $('#username').val(), $('#password').val(), function (valid)
+		{
+			if (valid)
 			{
-				if (valid)
-				{
-					launch();
-				}
-				else
-				{
-					loginButton.stop();
-					isAuthing = false;
-					alert('Incorrect credentials!');
-				}
-			});
+				console.log("Showing Modpacks");
+				launch();
+			}
+			else
+			{
+				loginButton.stop();
+				isAuthing = false;
+				alert('Incorrect credentials!');
+			}
+		});
 	}
 }
 
 function checkSelected()
 {
-	$("input[name='profile']")
-		.each(function ()
-		{
-			$(this)
-				.parent()
-				.removeClass("active");
-			if ($(this)
-				.prop('checked')) $(this)
-				.parent()
-				.addClass("active");
-		});
+	$("input[name='profile']").each(function ()
+	{
+		$(this).parent().removeClass("active");
+		if ($(this).prop('checked'))
+			$(this).parent().addClass("active");
+	});
 }
 
 function login(uuid)
@@ -51,13 +44,16 @@ function login(uuid)
 			playButton.start();
 			isLogging = true;
 			selectProfile(uuid);
-			checkAccessToken(function (valid)
+			checkAccessToken(function (validAccess)
 			{
-				if (valid)
-					launch(function () {});
+				if (validAccess)
+					launch(function ()
+					{
+						console.log("Showing Modpacks");
+					});
 				else
 				{
-					generateAccessToken(config.minecraft.username, config.minecraft.password, function (valid)
+					generateAccessToken(true, config.minecraft.username, config.minecraft.password, function (valid)
 					{
 						if (valid)
 							launch(function () {});

@@ -1,33 +1,22 @@
+<div id="addPack" class="addPack" style="display: none;">
+	<div class="modal animated">
+		<h1>Pack Creation</h1>
+		<div id="pack-content">
+		</div>
+		<div class="footer">
+			<button onclick="(next || function() {})();" style="margin-right: 4px;">NEXT</button>
+			<button>CANCEL</button>
+		</div>
+	</div>
+</div>
 <div class="modpacks">
 	<div class="packs">
 		<div class="left">
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
+			<div id="packs">
 			</div>
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
-			</div>
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
-			</div>
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
-			</div>
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
-			</div>
-			<div class="pack">
-				<img src="public/img/minecraft.png" alt="Vanilla" /><div class="text">Vanilla</div>
-				<div class="clear"></div>
-			</div>
+			<button class="create-pack" onclick="showPackDialog();">CREATE PACK</button>
 		</div>
 		<div class="preview">
-
 		</div>
 	</div>
 	<div class="footer">
@@ -39,7 +28,4 @@
 		</div>
 	</div>
 	<script src="public/js/modpacks.js"></script>
-	<script>
-		loadModPacks();
-	</script>
 </div>

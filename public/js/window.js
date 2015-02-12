@@ -7,16 +7,12 @@ window.onload = function ()
 		// Init Script here
 		main(function ()
 		{
-			require("nw.gui")
-				.Window.get()
-				.show();
+			require("nw.gui").Window.get().show();
 		});
 	}
 	catch (e)
 	{
-		require("nw.gui")
-			.Window.get()
-			.show();
+		require("nw.gui").Window.get().show();
 		throw e;
 	}
 };

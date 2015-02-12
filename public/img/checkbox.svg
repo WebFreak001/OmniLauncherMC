@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="16" height="16" id="svg2" version="1.1" inkscape:version="0.48.4 r9939" sodipodi:docname="checkbox.svg" inkscape:export-filename="D:\Documents\Visual Studio 2013\Projects\OmniLaunchMC\public\img\checkbox-checked.png"
+inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+	<defs id="defs4" />
+	<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="15.839192" inkscape:cx="20.657894" inkscape:cy="2.9291521" inkscape:document-units="px" inkscape:current-layer="layer1"
+	showgrid="true" inkscape:window-width="1920" inkscape:window-height="1027" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1">
+		<inkscape:grid type="xygrid" id="grid2985" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true" />
+	</sodipodi:namedview>
+	<metadata id="metadata7">
+		<rdf:RDF>
+			<cc:Work rdf:about="">
+				<dc:format>image/svg+xml</dc:format>
+				<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+				<dc:title></dc:title>
+			</cc:Work>
+		</rdf:RDF>
+	</metadata>
+	<g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-1036.3622)">
+		<rect style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:0.46274510000000002;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none" id="rect2987" width="14" height="14" x="1" y="1" ry="1" rx="1" transform="translate(0,1036.3622)"
+		/>
+		<rect style="fill:#009688;stroke:#009688;stroke-opacity:1;fill-opacity:1" id="rect2987-1" width="14" height="14.000017" x="17" y="1037.3622" ry="1" rx="1" />
+		<path style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" d="m 19,8 3,3 7,-7" id="path3775" inkscape:connector-curvature="0" transform="translate(0,1036.3622)"
+		/>
+	</g>
+</svg>

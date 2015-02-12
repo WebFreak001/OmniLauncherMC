@@ -1,0 +1,34 @@
+<h1>Importing...</h1>
+<button style="display: block; margin: auto; background: rgba(0, 0, 0, 0); border: none; width: 32px; height: 32px; padding: 4px;" id="spinner" class="ladda-button" data-style="contract"><span class="ladda-label"></span></button>
+<script>
+	var fs = require("fs");
+	var ncp = require("ncp").ncp;
+	var path = require("path");
+	var i = 0;
+	var errors = 0;
+
+	var l = Ladda.create(document.querySelector("#spinner"));
+	l.start();
+
+	if(!fs.existsSync("./versions/"))
+		fs.mkdir("./versions/");
+
+	function next(err) {
+		if (err) {
+			console.log("Couldn't copy!");
+			console.log(err);
+			errors++;
+		}
+		if (i < versionImporter_versions.length) {
+			ncp(path.join(versionImporter_folder, versionImporter_versions[i]), path.join("./versions/", versionImporter_versions[i]), next);
+			i++;
+		} else {
+			if(errors > 0)
+				alert("Copying versions completed with " + errors + " errors");
+			hidePackDialog();
+			ajax("views/modpacks.html");
+		}
+	}
+
+	next();
+</script>

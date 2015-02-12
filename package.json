@@ -3,18 +3,20 @@
 	"version": "1.0.0",
 	"description": "OmniLaunchMC",
 	"main": "index.html",
-    "dependencies": {
-        "less": "2.3.x",
-        "request": "2.53.x"
-    },
+	"dependencies":
+	{
+		"less": "2.3.x",
+		"request": "2.53.x",
+		"ncp": "1.0.x"
+	},
 	"window":
 	{
-        "show": true,
-        "toolbar": true,
-        "position": "center",
+		"show": false,
+		"toolbar": true,
+		"position": "center",
 		"width": 900,
 		"height": 510,
-        "min_width": 600,
-        "min_height": 480
+		"min_width": 600,
+		"min_height": 480
 	}
 }

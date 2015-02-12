@@ -4,14 +4,20 @@
 		<h2>Login using your Mojang account</h2>
 		<input class="full" type="text" id="username" placeholder="E-Mail">
 		<input class="full" type="password" id="password" placeholder="Password">
-		<label><input type="checkbox" id="save"/> Save password<label>
-		<button id="loginBtn" class="ladda-button" data-style="slide-down" onclick="auth($('#save').prop('checked'));"><span class="ladda-label">Login</span></button>
+		<label>
+			<input type="checkbox" id="save" /> Save password
+			<label>
+				<button id="loginBtn" class="ladda-button" data-style="slide-down" onclick="auth($('#save').prop('checked'));">
+					<span class="ladda-label">Login</span>
+				</button>
 	</div>
 	<div class="right">
 		<h2>Use an existing account</h2>
 		<div id="profiles">
 		</div>
-		<button id="playBtn" class="ladda-button" data-style="slide-down" onclick="login($('input[name=\'profile\']:checked').val());"><span class="ladda-label">Play</span></button>
+		<button id="playBtn" class="ladda-button" data-style="slide-down" onclick="login($('input[name=\'profile\']:checked').val());">
+			<span class="ladda-label">Play</span>
+		</button>
 	</div>
 	<div class="clear"></div>
 </div>

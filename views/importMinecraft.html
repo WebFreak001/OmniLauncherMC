@@ -1,0 +1,108 @@
+<h2>Import from Minecraft</h2>
+<input class="fileViewText" type="text" id="mcLocDisp" />
+<button class="fileViewButton" onclick="document.getElementById('mcLocation').click()">Select .minecraft/ folder</button>
+<input style="display: none;" type="file" nwdirectory id="mcLocation" onchange="readProfiles()" />
+<div class="clear" style="margin-bottom: 4px;"></div>
+<table class="import-profile-list">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Version</th>
+		</tr>
+	</thead>
+	<tbody id="profiles">
+
+	</tbody>
+</table>
+<script>
+	var fs = require("fs");
+	var path = require("path");
+	var os = require("os");
+	var request = require("request");
+	var mcFolder = "";
+	switch (os.platform()) {
+		case "linux":
+			mcFolder = "~/.minecraft/";
+			break;
+		case "win32":
+			mcFolder = path.join(process.env.APPDATA, ".minecraft/");
+			break;
+	}
+	var launcher_config;
+	var latest = "1.8.1";
+	var verHistory;
+	var versionImporter_folder = "";
+	var versionImporter_versions = [];
+
+	request("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json", function(err, res, body) {
+		if (err) {
+			console.log(err);
+			alert("Couldn't update version history!");
+		}
+
+		verHistory = body;
+		if (typeof body == "string")
+			verHistory = JSON.parse(body);
+
+		console.log(verHistory);
+		latest = verHistory.latest.release;
+	});
+
+	$("#mcLocDisp").val(mcFolder);
+
+	if (mcFolder !== "")
+		readProfiles();
+
+	function addProfile(name, version) {
+		$("#profiles").append("<tr><td><input type='checkbox' name='toImport' onchange='' value='" + version + "' id='" + version + "'/></td><td><label for='" + version + "'>" + name + "</label></td><td><label for='" + version + "'>" + version +
+			"</label></td>");
+	}
+
+	function readProfiles() {
+		mcFolder = $("#mcLocation").val() === "" ? mcFolder : $("#mcLocation").val();
+		$("#mcLocDisp").val(mcFolder);
+		fs.exists(mcFolder, function(exists) {
+			if (exists && fs.lstatSync(mcFolder).isDirectory()) {
+				fs.exists(path.join(mcFolder, "launcher_profiles.json"), function(profilesExists) {
+					if (!profilesExists) {
+						alert("Couldn't read launcher_profiles.json!");
+					} else {
+						fs.readFile(path.join(mcFolder, "launcher_profiles.json"), function(err, data) {
+							if (err) alert(err);
+							try {
+								launcher_config = JSON.parse(data);
+								$("#profiles").html("");
+								for (var profile in launcher_config.profiles) {
+									addProfile(launcher_config.profiles[profile].name, launcher_config.profiles[profile].lastVersionId || "Latest");
+								}
+							} catch (e) {
+								console.log(e);
+								alert("Error reading launcher_profiles.json!");
+							}
+						});
+					}
+				});
+			} else {
+				alert("Invalid .minecraft/ folder path!");
+			}
+		});
+	}
+
+	function next() {
+		var selectedProfiles = [];
+		$("input[name='toImport']:checked").each(function() {
+			if (this.value == "Latest")
+				selectedProfiles.push(latest);
+			else
+				selectedProfiles.push(this.value);
+		});
+		if (selectedProfiles.length === 0) {
+			alert("Please select at least one profile!");
+		} else {
+			versionImporter_folder = path.join(mcFolder, "versions/");
+			versionImporter_versions = selectedProfiles;
+			setModalPage("views/versionImporter.html");
+		}
+	}
+</script>

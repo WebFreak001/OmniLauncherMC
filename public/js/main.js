@@ -8,8 +8,7 @@ function ajax(page, cb)
 	console.log(page);
 	$.get(page, function (response)
 	{
-		$("body")
-			.html(response);
+		$("body").html(response);
 		if (cb) cb();
 	});
 }
@@ -21,8 +20,17 @@ function main(cb)
 	{
 		if (!config.minecraft)
 		{
-			config.users = {};
 			config.minecraft = {};
+			save();
+		}
+		if (!config.users)
+		{
+			config.users = {};
+			save();
+		}
+		if (!config.packs)
+		{
+			config.packs = [];
 			save();
 		}
 
@@ -50,14 +58,12 @@ function loadLogin(cb)
 				var user = config.users[k];
 				if (first)
 				{
-					$("#profiles")
-						.append("<label class='active'><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "' checked>" + user.name + "</label>");
+					$("#profiles").append("<label class='active'><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "' checked>" + user.name + "</label>");
 					first = false;
 				}
 				else
 				{
-					$("#profiles")
-						.append("<label><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "'>" + user.name + "</label>");
+					$("#profiles").append("<label><input type='radio' onchange='checkSelected()' name='profile' value='" + k + "'>" + user.name + "</label>");
 				}
 			}
 		}
@@ -87,9 +93,10 @@ function checkAccessToken(cb)
 		}
 	}, function (error, response, body)
 	{
-		if(response.statusCode != 204)
+		if (response.statusCode != 204)
 			config.minecraft = {};
-		if (cb) cb(response.statusCode == 204);
+		if (cb)
+			cb(response.statusCode == 204);
 	});
 }
 
@@ -110,7 +117,7 @@ function selectProfile(id)
 	save();
 }
 
-function generateAccessToken(save, username, password, cb)
+function generateAccessToken(savePw, username, password, cb)
 {
 	request.post(
 	{
@@ -140,7 +147,7 @@ function generateAccessToken(save, username, password, cb)
 			username: username,
 			password: password
 		};
-		if (!save)
+		if (!savePw)
 		{
 			config.users[body.selectedProfile.id].password = "";
 		}

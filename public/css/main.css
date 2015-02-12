@@ -85,12 +85,10 @@ body, html {
 	border-bottom: 2px solid #80CBC4;
 	margin-bottom: 8px;
 }
-.login .right input
-{
+.login .right input {
 	display: none;
 }
-.login .right #profiles
-{
+.login .right #profiles {
 	height: 250px;
 	overflow-y: auto;
 }
@@ -123,8 +121,44 @@ body, html {
 .login button:hover {
 	background-color: #26A69A;
 }
+input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-image: url(../img/checkbox-unchecked.png);
+	vertical-align: center;
+	outline: none;
+	margin: 0 3px 0 0;
+}
+input[type="checkbox"]:checked {
+	background-image: url(../img/checkbox-checked.png);
+}
+.fileViewText {
+	float: left;
+	width: calc(100% - 200px);
+	box-sizing: border-box;
+	font-family: Roboto, sans-serif;
+	font-size: 1em;
+	height: 30px;
+	line-height: 30px;
+}
+.fileViewButton {
+	box-sizing: border-box;
+	width: 196px;
+	border: none;
+	outline: none;
+	background-color: #009688;
+	color: white;
+	font-family: Roboto, sans-serif;
+	font-size: 1em;
+	height: 30px;
+	line-height: 30px;
+	float: right;
+}
 ::-webkit-scrollbar {
-	width: 6px;
+	width: 10px;
 }
 ::-webkit-scrollbar-track {
 	-webkit-border-radius: 10px;
