@@ -87,6 +87,8 @@ function checkAccessToken(cb)
 		}
 	}, function (error, response, body)
 	{
+		if(response.statusCode != 204)
+			config.minecraft = {};
 		if (cb) cb(response.statusCode == 204);
 	});
 }
@@ -108,7 +110,7 @@ function selectProfile(id)
 	save();
 }
 
-function generateAccessToken(username, password, cb)
+function generateAccessToken(save, username, password, cb)
 {
 	request.post(
 	{
@@ -138,6 +140,10 @@ function generateAccessToken(username, password, cb)
 			username: username,
 			password: password
 		};
+		if (!save)
+		{
+			config.users[body.selectedProfile.id].password = "";
+		}
 		config.minecraft = config.users[body.selectedProfile.id];
 		save();
 		if (cb) cb(true);
