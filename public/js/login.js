@@ -19,7 +19,7 @@ function auth(save)
 			{
 				loginButton.stop();
 				isAuthing = false;
-				alert('Incorrect credentials!');
+				alert('Invalid credentials!');
 			}
 		});
 	}
@@ -43,7 +43,8 @@ function login(uuid)
 		{
 			playButton.start();
 			isLogging = true;
-			selectProfile(uuid);
+			config.minecraft = config.users[uuid];
+			console.log(config);
 			checkAccessToken(function (validAccess)
 			{
 				if (validAccess)
@@ -53,7 +54,7 @@ function login(uuid)
 					});
 				else
 				{
-					generateAccessToken(true, config.minecraft.username, config.minecraft.password, function (valid)
+					generateAccessToken(true, config.users[uuid].username, config.users[uuid].password, function (valid)
 					{
 						if (valid)
 							launch(function () {});
