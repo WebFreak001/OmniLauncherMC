@@ -4,7 +4,7 @@ function loadModPacks()
 	$("#packs").html("");
 	for (var i = 0; i < config.packs.length; i++)
 	{
-		$("#packs").append("<div class='pack'><img src='" + config.packs[i].thumb + "' alt='" + config.packs[i].type + "'><div class='text'>" + config.packs[i].title + "</div><div class='clear'></div></div>");
+		$("#packs").append("<div class='pack' title='" + config.packs[i].name + "'><img src='" + config.packs[i].thumb + "' alt='" + config.packs[i].type + "'><div class='text'>" + config.packs[i].name + "</div><div class='clear'></div></div>");
 	}
 	if (config.packs.length === 0)
 	{
@@ -49,4 +49,3 @@ function hidePackDialog()
 }
 
 loadModPacks();
-showPackDialog();

@@ -43,8 +43,7 @@ function login(uuid)
 		{
 			playButton.start();
 			isLogging = true;
-			config.minecraft = config.users[uuid];
-			console.log(config);
+			selectProfile(uuid);
 			checkAccessToken(function (validAccess)
 			{
 				if (validAccess)
@@ -61,6 +60,7 @@ function login(uuid)
 						else
 						{
 							delete config.users[uuid];
+							save();
 							loadLogin(function () {});
 							isLogging = false;
 							playButton.stop();

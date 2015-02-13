@@ -1,5 +1,7 @@
 <h1>Importing...</h1>
-<button style="display: block; margin: auto; background: rgba(0, 0, 0, 0); border: none; width: 32px; height: 32px; padding: 4px;" id="spinner" class="ladda-button" data-style="contract"><span class="ladda-label"></span></button>
+<button style="display: block; margin: auto; background: rgba(0, 0, 0, 0); border: none; width: 32px; height: 32px; padding: 4px;" id="spinner" class="ladda-button" data-style="contract">
+	<span class="ladda-label"></span>
+</button>
 <script>
 	var fs = require("fs");
 	var ncp = require("ncp").ncp;
@@ -10,7 +12,7 @@
 	var l = Ladda.create(document.querySelector("#spinner"));
 	l.start();
 
-	if(!fs.existsSync("./versions/"))
+	if (!fs.existsSync("./versions/"))
 		fs.mkdir("./versions/");
 
 	function next(err) {
@@ -20,12 +22,30 @@
 			errors++;
 		}
 		if (i < versionImporter_versions.length) {
-			ncp(path.join(versionImporter_folder, versionImporter_versions[i]), path.join("./versions/", versionImporter_versions[i]), next);
-			i++;
+			if(versionImporter_versions[i])
+				ncp(path.join(versionImporter_folder, versionImporter_versions[i]), path.join("./versions/", versionImporter_versions[i]), function(err) {
+					if (!err) {
+						var entry = {
+							name: versionImporter_versions[i],
+							directory: versionImporter_versions[i],
+							type: "vanilla",
+							created_at: new Date(),
+							modded: (versionImporter_versions[i].indexOf("Forge") != -1 ? "true" : (/^\d+\.\d+\.\d+$/.test(versionImporter_versions[i]) ? "false" : "maybe")),
+							tags: ["vanilla", versionImporter_versions[i]],
+							background: "public/img/default-mc.png",
+							thumb: "public/img/minecraft.png",
+							description: "Vanilla " + versionImporter_versions[i]
+						};
+						config.packs.push(entry);
+					}
+					i++;
+					next(err);
+				});
 		} else {
-			if(errors > 0)
+			if (errors > 0)
 				alert("Copying versions completed with " + errors + " errors");
 			hidePackDialog();
+			save();
 			ajax("views/modpacks.html");
 		}
 	}
