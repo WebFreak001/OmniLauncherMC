@@ -12,11 +12,11 @@
 	"window":
 	{
 		"show": false,
-		"toolbar": false,
+		"toolbar": true,
 		"position": "center",
-		"width": 900,
-		"height": 510,
-		"min_width": 600,
+		"width": 1000,
+		"height": 600,
+		"min_width": 730,
 		"min_height": 480
 	}
 }

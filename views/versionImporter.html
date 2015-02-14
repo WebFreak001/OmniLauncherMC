@@ -30,9 +30,9 @@
 							directory: versionImporter_versions[i],
 							type: "vanilla",
 							created_at: new Date(),
-							modded: (versionImporter_versions[i].indexOf("Forge") != -1 ? "true" : (/^\d+\.\d+\.\d+$/.test(versionImporter_versions[i]) ? "false" : "maybe")),
+							modded: ((versionImporter_versions[i].indexOf("Forge") != -1 || versionImporter_versions[i].indexOf("OptiFine") != -1) ? "true" : (/^\d+\.\d+\.\d+$/.test(versionImporter_versions[i]) ? "false" : "maybe")),
 							tags: ["vanilla", versionImporter_versions[i]],
-							background: "public/img/default-mc.png",
+							background: "public/img/shuffle/" + Math.floor(Math.random() * 3) + ".png",
 							thumb: "public/img/minecraft.png",
 							description: "Vanilla " + versionImporter_versions[i]
 						};

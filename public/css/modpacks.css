@@ -11,14 +11,168 @@
 	padding: 0;
 	background-color: #263238;
 }
-.modpacks .packs .preview {
+.modpacks .packs #preview {
 	float: right;
 	height: 100%;
 	width: calc(100% - 200px);
 	box-sizing: border-box;
 	margin: 0;
-	padding: 8px;
+	padding: 0;
 	background-color: #212121;
+	position: relative;
+	z-index: 2;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.modpacks .packs #preview .vanilla-container {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	z-index: 2;
+	color: white;
+	padding-top: 18px;
+	box-sizing: border-box;
+	box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.modpacks .packs #preview .vanilla-container .name .icon {
+	float: left;
+	width: 48px;
+	height: 48px;
+	display: block;
+	vertical-align: middle;
+	margin: 4px 0;
+}
+.modpacks .packs #preview .vanilla-container .name {
+	position: relative;
+	margin-bottom: 12px;
+	width: 100%;
+	padding: 4px 12px;
+	background-color: rgba(0, 0, 0, 0.8);
+	font-weight: 100;
+	font-size: 2.5em;
+	color: white;
+	box-sizing: border-box;
+}
+.modpacks .packs #preview .vanilla-container .name .badges {
+	padding-bottom: 4px;
+}
+.modpacks .packs #preview .vanilla-container .name .badge {
+	border-radius: 4px;
+	background-color: #3F51B5;
+	font-size: 11pt;
+	padding: 2px 8px;
+	margin-right: 6px;
+	color: white;
+	display: block;
+	float: left;
+}
+.modpacks .packs #preview .vanilla-container .content {
+	width: 100%;
+	padding: 0 12px;
+	box-sizing: border-box;
+}
+.modpacks .packs #preview .vanilla-container .content hr {
+	height: 1px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: none;
+}
+.modpacks .packs #preview .vanilla-container .content h2 {
+	font-weight: 300;
+	font-size: 1.6em;
+}
+.modpacks .packs #preview .vanilla-container .content .status-container {
+	max-width: 700px;
+	margin: auto;
+	width: 100%;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status:before {
+	content: "";
+	display: block;
+	padding-top: 100%;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status {
+	width: 24%;
+	border-radius: 100%;
+	border: 8px solid gray;
+	position: relative;
+	float: left;
+	margin-right: 1%;
+	box-sizing: border-box;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status:last-child {
+	margin-right: 0;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status.green {
+	border: 8px solid #4CAF50;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status.yellow {
+	border: 8px solid #FFC107;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status.red {
+	border: 8px solid #D32F2F;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status .status {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status .status {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status .status .status-title {
+	width: 100%;
+	margin-top: 10%;
+	text-align: center;
+}
+.modpacks .packs #preview .vanilla-container .content .mc-status .status .status-text {
+	margin-top: 10%;
+	font-size: 1.4em;
+	font-weight: 300;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 25px;
+	margin: auto;
+	text-align: center;
+}
+.modpacks .packs #preview .vanilla-container .info {
+	width: 100%;
+	margin: 12px 0;
+	min-height: 100px;
+	background-color: rgba(0, 0, 0, 0.6);
+	padding: 8px;
+	box-sizing: border-box;
+}
+.modpacks .packs #preview .vanilla-container .actions {
+	width: 100%;
+	margin: 12px 0;
+	min-height: 40px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+.modpacks .packs #preview .vanilla-container .button {
+	float: right;
+	height: 40px;
+	line-height: 40px;
+	font-weight: 300;
+	text-align: center;
+	min-width: 200px;
+	padding: 2px 20px;
 }
 .modpacks .footer {
 	height: 40px;
@@ -30,6 +184,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 1000;
 	line-height: 40px;
 	background-color: #222d31;
 	color: white;
@@ -51,24 +206,34 @@
 .modpacks .packs .left #packs {
 	height: calc(100% - 34px);
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 .modpacks .packs .left .pack {
 	height: 44px;
 	color: white;
 	padding: 0;
 	margin: 0;
+	position: relative;
+	z-index: 1;
+	box-shadow: inset 0 0 0 1000px rgba(30, 50, 56, 0.6);
+	background-size: 400px;
+	background-position: center;
+	cursor: pointer;
+}
+.modpacks .packs .left .pack:hover, .modpacks .packs .left .pack.active {
+	box-shadow: inset 0 0 0 1000px rgba(30, 50, 56, 0.1);
 }
 .modpacks .packs .left .create-pack {
-	color: white;
 	border: none;
-	background-color: #009688;
 	width: 100%;
 	box-sizing: border-box;
 	font-family: Roboto, sans-serif;
 	font-size: 1em;
 	font-weight: 300;
 	text-align: center;
-	padding: 6px 0;
+	height: 44px;
+	line-height: 40px;
+	padding: 2px 0;
 	margin: 0;
 	position: absolute;
 	bottom: 0;
@@ -114,7 +279,7 @@
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
-	z-index: 100;
+	z-index: 10000;
 	background-color: rgba(0, 0, 0, 0.8);
 }
 .addPack .modal {
