@@ -78,6 +78,18 @@ function checkStatus()
 	}
 }
 
+function startMinecraft(id)
+{
+	var exec = require("child_process").exec;
+	exec("", function (error, stdout, stderr)
+	{
+		stdout.on("data", function (data)
+		{
+			console.log(data);
+		});
+	});
+}
+
 function displayStatus()
 {
 	try
