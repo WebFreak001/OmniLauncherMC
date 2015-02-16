@@ -105,7 +105,7 @@ class DependencyLoader {
             fs.mkdirSync("lib/");
         if (!fs.existsSync("lib/natives/"))
             fs.mkdirSync("lib/natives/");
-        async.each(gameJson.libraries, DependencyLoader.loadDependency, function(err) {
+        async.eachLimit(gameJson.libraries, 30, DependencyLoader.loadDependency, function(err) {
             if (err) console.log(err);
             callback(err);
         });

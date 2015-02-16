@@ -1,5 +1,6 @@
 var mcStatus;
 var lastStatusCheck = 0;
+var Launcher = require("./public/js/minecraft-launcher.js");
 
 function loadModPacks()
 {
@@ -80,14 +81,7 @@ function checkStatus()
 
 function startMinecraft(id)
 {
-	var exec = require("child_process").exec;
-	exec("", function (error, stdout, stderr)
-	{
-		stdout.on("data", function (data)
-		{
-			console.log(data);
-		});
-	});
+	new Launcher(JSON.parse(fs.readFileSync("versions/" + config.packs[id].directory + "/" + config.packs[id].directory + ".json")), "versions/" + config.packs[id].directory, config.minecraft.name, config.minecraft.uuid, config.minecraft.accessToken, config.minecraft.legacy ? config.minecraft.legacy : false).start(function (progress) {}, function (out) {}, function (err) {});
 }
 
 function displayStatus()
