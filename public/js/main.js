@@ -145,7 +145,8 @@ function generateAccessToken(savePw, username, password, cb)
 			accessToken: body.accessToken,
 			clientToken: body.clientToken,
 			username: username,
-			password: password
+			password: password,
+			legacy: body.selectedProfile.legacy
 		};
 		if (!savePw)
 		{

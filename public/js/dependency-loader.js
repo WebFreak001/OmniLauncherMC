@@ -25,7 +25,7 @@ var DependencyLoader = (function () {
                         else
                             request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(fs.createWriteStream("lib/" + fileName).on("finish", function () {
                                 request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile).pipe(fs.createWriteStream("lib/" + shaFile).on("finish", function () {
-                                    console.log("End" + name);
+                                    console.log(name);
                                     callback();
                                 }));
                             }));
@@ -35,7 +35,7 @@ var DependencyLoader = (function () {
             else {
                 request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(fs.createWriteStream("lib/" + fileName).on("finish", function () {
                     request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile).pipe(fs.createWriteStream("lib/" + shaFile).on("finish", function () {
-                        console.log("End" + name);
+                        console.log(name);
                         callback();
                     }));
                 }));
@@ -45,7 +45,7 @@ var DependencyLoader = (function () {
     DependencyLoader.loadAll = function (gameJson, callback) {
         if (!fs.existsSync("lib/"))
             fs.mkdirSync("lib/");
-        async.each(gameJson, DependencyLoader.loadDependency, function (err) {
+        async.each(gameJson.libraries, DependencyLoader.loadDependency, function (err) {
             if (err)
                 console.log(err);
             callback(err);
