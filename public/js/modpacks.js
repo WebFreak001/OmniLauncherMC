@@ -53,6 +53,7 @@ function selectPack(id)
 			"		</div>",
 			"		<div class='actions'>",
 			"			<div class='button tealButton' onclick='startMinecraft(" + id + ")'>PLAY</div>",
+			"			<div class='button tealButton' onclick='importLibs()' title='This is necessary if you imported a modded version of Minecraft'>IMPORT LIBRARIES</div>",
 			"		</div>",
 			"		<div class='clear'></div>",
 			"	</div>",

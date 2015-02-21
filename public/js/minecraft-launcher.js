@@ -61,6 +61,7 @@ var MinecraftLauncher = (function () {
                         args.push(extraArgs[i]);
                     console.log(args);
                     global.logger = new EventEmitter();
+                    gui.Window.get().hide();
                     var java = spawn("java", args);
                     var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
                     java.stdout.on("data", function (data) {
@@ -75,6 +76,7 @@ var MinecraftLauncher = (function () {
                     });
                     java.on("close", function (code) {
                         loggerWindow.close();
+                        gui.Window.get().show();
                         console.log("Java closed with error code " + code);
                     });
                 });

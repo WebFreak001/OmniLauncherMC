@@ -79,11 +79,13 @@ class MinecraftLauncher {
 
                     global.logger = new EventEmitter();
 
+                    gui.Window.get().hide();
+
                     var java = spawn("java", args);
                     var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
                     java.stdout.on("data", function(data) { global.logger.emit("out", data); console.log("OUT: " + data); out(data); });
                     java.stderr.on("data", function(data) { global.logger.emit("err", data); console.log("ERR: " + data); err(data); });
-                    java.on("close", function(code) { loggerWindow.close(); console.log("Java closed with error code " + code); });
+                    java.on("close", function(code) { loggerWindow.close(); gui.Window.get().show(); console.log("Java closed with error code " + code); });
                 });
             });
         });

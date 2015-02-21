@@ -87,7 +87,7 @@
 	font-size: 1.6em;
 }
 .modpacks .packs #preview .vanilla-container .content .status-container {
-	max-width: 700px;
+	max-width: 1000px;
 	margin: auto;
 	width: 100%;
 }
@@ -173,6 +173,7 @@
 	text-align: center;
 	min-width: 200px;
 	padding: 2px 20px;
+	margin: 8px 4px;
 }
 .modpacks .footer {
 	height: 40px;

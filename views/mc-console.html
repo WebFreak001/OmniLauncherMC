@@ -10,9 +10,11 @@
 		function load() {
 			global.logger.on("out", function(data) {
 				$("#messages").append("<tr class='out'><td>INFO</td><td>" + data + "</td></tr>");
+				window.scrollTo(0, document.body.scrollHeight);
 			});
 			global.logger.on("err", function(data) {
 				$("#messages").append("<tr class='err'><td>ERROR</td><td>" + data + "</td></tr>");
+				window.scrollTo(0, document.body.scrollHeight);
 			});
 			gui.Window.get().show();
 		}
