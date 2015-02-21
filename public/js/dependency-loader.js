@@ -3,6 +3,7 @@ var fs = require("fs");
 var async = require("async");
 var os = require("os");
 var unzip = require("unzip");
+var mkdirp = require("mkdirp");
 var DependencyLoader = (function () {
     function DependencyLoader() {
     }
@@ -36,24 +37,44 @@ var DependencyLoader = (function () {
         }
         nativeString = nativeString.replace("${arch}", process.arch.substr(1));
         var fileName = name + "-" + version + nativeString + ".jar";
-        var shaFile = fileName + ".sha1";
-        fs.exists("lib/" + shaFile, function (exists) {
-            if (exists) {
-                request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile, function (err, res, body) {
-                    if (err)
-                        return callback(err);
-                    fs.readFile("lib/" + shaFile, function (err, data) {
-                        if (err)
-                            return callback(err);
-                        if (data == body)
+        var shaFile = fileName + ".sha";
+        fs.exists("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + shaFile, function (shaExists) {
+            if (shaExists) {
+                if (needsExtract) {
+                    // Minecraft bugs out and is not playable when not extracting every time
+                    console.log("unzipping " + name);
+                    try {
+                        fs.createReadStream("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(unzip.Extract({ path: "lib/natives/" })).on("error", function (err) {
+                            console.log("Error " + fileName + ": ", err);
+                        }).on("finish", function () {
+                            console.log("unzipped " + name);
                             callback();
-                        else
-                            request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(fs.createWriteStream("lib/" + fileName).on("finish", function () {
-                                request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile).pipe(fs.createWriteStream("lib/" + shaFile).on("finish", function () {
+                        });
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                }
+                else {
+                    console.log(name);
+                    callback();
+                }
+            }
+            else {
+                fs.exists("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + fileName, function (jarExists) {
+                    if (jarExists) {
+                        callback();
+                    }
+                    else {
+                        mkdirp("lib/libs/" + libUrl + "/" + name + "/" + version + "/", function (err) {
+                            if (err)
+                                return callback(err);
+                            request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(fs.createWriteStream("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + fileName).on("finish", function () {
+                                request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile).pipe(fs.createWriteStream("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + shaFile).on("finish", function () {
                                     if (needsExtract) {
                                         console.log("unzipping " + name);
                                         try {
-                                            fs.createReadStream("lib/" + fileName).pipe(unzip.Extract({ path: "lib/natives/" })).on("error", function (err) {
+                                            fs.createReadStream("lib/libs/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(unzip.Extract({ path: "lib/natives/" })).on("error", function (err) {
                                                 console.log("Error " + fileName + ": ", err);
                                             }).on("finish", function () {
                                                 console.log("unzipped " + name);
@@ -70,32 +91,9 @@ var DependencyLoader = (function () {
                                     }
                                 }));
                             }));
-                    });
+                        });
+                    }
                 });
-            }
-            else {
-                request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + fileName).pipe(fs.createWriteStream("lib/" + fileName).on("finish", function () {
-                    request("https://libraries.minecraft.net/" + libUrl + "/" + name + "/" + version + "/" + shaFile).pipe(fs.createWriteStream("lib/" + shaFile).on("finish", function () {
-                        if (needsExtract) {
-                            console.log("unzipping " + name);
-                            try {
-                                fs.createReadStream("lib/" + fileName).pipe(unzip.Extract({ path: "lib/natives/" })).on("error", function (err) {
-                                    console.log("Error " + fileName + ": ", err);
-                                }).on("finish", function () {
-                                    console.log("unzipped " + name);
-                                    callback();
-                                });
-                            }
-                            catch (e) {
-                                console.log(e);
-                            }
-                        }
-                        else {
-                            console.log(name);
-                            callback();
-                        }
-                    }));
-                }));
             }
         });
     };

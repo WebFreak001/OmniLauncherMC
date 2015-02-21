@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Minecraft Output</title>
+	<script src="../public/js/jquery.min.js"></script>
+	<script>
+		var gui = require("nw.gui");
+
+		function load() {
+			global.logger.on("out", function(data) {
+				$("#messages").append("<tr class='out'><td>INFO</td><td>" + data + "</td></tr>");
+			});
+			global.logger.on("err", function(data) {
+				$("#messages").append("<tr class='err'><td>ERROR</td><td>" + data + "</td></tr>");
+			});
+			gui.Window.get().show();
+		}
+	</script>
+	<link rel="stylesheet" href="../public/css/mc-output.css" />
+</head>
+
+<body onload="load();">
+	<table id="messages">
+	</table>
+</body>
+
+</html>

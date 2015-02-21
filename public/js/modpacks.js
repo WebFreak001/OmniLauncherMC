@@ -64,7 +64,7 @@ function selectPack(id)
 
 function checkStatus()
 {
-	if (lastStatusCheck < new Date().getTime() - 30000)
+	if (lastStatusCheck < new Date().getTime() - 15000)
 	{
 		request("https://status.mojang.com/check", function (err, res, body)
 		{
