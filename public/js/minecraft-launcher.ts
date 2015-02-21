@@ -28,16 +28,22 @@ class MinecraftLauncher {
 
     start(progress, out, err) {
         var that = this;
+        global.logger = new EventEmitter();
+        var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
         dependencyLoader.loadAll(this.gameConf, function() {
             progress(1);
+            global.logger.emit("out", "Downloaded all dependencies");
             if (!fs.existsSync("assets/"))
                 fs.mkdirSync("assets/");
             if (!fs.existsSync("assets/indexes/"))
                 fs.mkdirSync("assets/indexes/");
             request("https://s3.amazonaws.com/Minecraft.Download/indexes/" + that.gameConf.assets + ".json").pipe(fs.createWriteStream("assets/indexes/" + that.gameConf.assets + ".json")).on("finish", function() {
                 progress(2);
+                global.logger.emit("out", "Prepared resources");
                 that.downloadAssets(that.gameConf.assets, function() {
                     progress(3);
+                    global.logger.emit("out", "Downloaded all resources");
+                    global.logger.emit("out", "Starting Minecraft...");
 
                     var args = [];
                     var libs = [];
@@ -77,12 +83,10 @@ class MinecraftLauncher {
 
                     console.log(args);
 
-                    global.logger = new EventEmitter();
 
                     gui.Window.get().hide();
 
                     var java = spawn("java", args);
-                    var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
                     java.stdout.on("data", function(data) { global.logger.emit("out", data); console.log("OUT: " + data); out(data); });
                     java.stderr.on("data", function(data) { global.logger.emit("err", data); console.log("ERR: " + data); err(data); });
                     java.on("close", function(code) { loggerWindow.close(); gui.Window.get().show(); console.log("Java closed with error code " + code); });
