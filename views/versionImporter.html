@@ -22,7 +22,7 @@
 			errors++;
 		}
 		if (i < versionImporter_versions.length) {
-			if(versionImporter_versions[i])
+			if (versionImporter_versions[i])
 				ncp(path.join(versionImporter_folder, versionImporter_versions[i]), path.join("./versions/", versionImporter_versions[i]), function(err) {
 					if (!err) {
 						var entry = {

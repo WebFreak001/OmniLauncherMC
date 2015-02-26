@@ -79,8 +79,12 @@ var MinecraftLauncher = (function () {
                         err(data);
                     });
                     java.on("close", function (code) {
-                        loggerWindow.close();
                         gui.Window.get().show();
+                        try {
+                            loggerWindow.close();
+                        }
+                        catch (e) {
+                        }
                         console.log("Java closed with error code " + code);
                     });
                 });

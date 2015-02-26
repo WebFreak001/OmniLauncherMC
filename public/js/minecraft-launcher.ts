@@ -89,7 +89,7 @@ class MinecraftLauncher {
                     var java = spawn("java", args);
                     java.stdout.on("data", function(data) { global.logger.emit("out", data); console.log("OUT: " + data); out(data); });
                     java.stderr.on("data", function(data) { global.logger.emit("err", data); console.log("ERR: " + data); err(data); });
-                    java.on("close", function(code) { loggerWindow.close(); gui.Window.get().show(); console.log("Java closed with error code " + code); });
+                    java.on("close", function(code) { gui.Window.get().show(); try { loggerWindow.close(); } catch (e) { } console.log("Java closed with error code " + code); });
                 });
             });
         });

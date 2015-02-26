@@ -85,6 +85,17 @@ function startMinecraft(id)
 	new Launcher(JSON.parse(fs.readFileSync("versions/" + config.packs[id].directory + "/" + config.packs[id].directory + ".json")), "versions/" + config.packs[id].directory, config.minecraft.name, config.minecraft.uuid, config.minecraft.accessToken, config.minecraft.legacy ? config.minecraft.legacy : false).start(function (progress) {}, function (out) {}, function (err) {});
 }
 
+function importLibs()
+{
+	$("#addPack").css(
+	{
+		display: "block"
+	});
+	$("#pack-content").html("");
+	$("#addPack .modal").addClass("slideInDown");
+	setModalPage("views/importLibs.html");
+}
+
 function displayStatus()
 {
 	try

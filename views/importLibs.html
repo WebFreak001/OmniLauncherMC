@@ -1,0 +1,84 @@
+<h2>Import Libraries</h2>
+<button class="commonButton big tealButton" onclick="importMcLibs(true, hidePackDialog)">Soft Import</button> Only import libraries that don't exist yet or are corrupt.
+<br>
+<button class="commonButton big tealButton" onclick="importMcLibs(false, hidePackDialog)">Hard Import</button> Replace all local libraries by the imported libraries.
+<br>
+
+<script>
+	var fs = require("fs");
+	var async = require("async");
+	var path = require("path");
+	var os = require("os");
+	var mkdirp = require("mkdirp");
+	var readdirp = require('recursive-readdir');
+
+	var mcFolder = "";
+	switch (os.platform()) {
+		case "linux":
+			mcFolder = "~/.minecraft/";
+			break;
+		case "win32":
+			mcFolder = path.join(process.env.APPDATA, ".minecraft/");
+			break;
+		default:
+			throw "Unsupported platform: " + os.platform();
+	}
+
+	function importMcLibs(soft, callback) {
+		readdirp(mcFolder + "libraries/", function(err, files) {
+			var jars = [];
+			async.each(files, function(file, cb) {
+				fs.stat(file, function(err, stat) {
+					if (err)
+						return cb(err);
+					if (!stat.isDirectory())
+						jars.push(file);
+					cb();
+				});
+			}, function(err) {
+				console.log(jars);
+				async.each(jars, function(jar, cb) {
+					importMcLib(jar, soft, cb);
+				}, callback);
+			});
+		});
+	}
+
+	function importMcLib(jar, soft, cb) {
+		if (jar === undefined || jar.trim() === "" || (jar.indexOf(".jar") == -1 && jar.indexOf(".sha") == -1))
+			return cb();
+		var localFile = path.normalize("lib/libs/" + jar.substr((mcFolder + "libraries/").length));
+		var localFolder = localFile.substr(0, localFile.length - /[^\\/]+(?=(\.(?:jar|sha))$)/.exec(localFile).join("").length);
+		fs.exists(localFile, function(exists) {
+			if (!exists)
+				soft = false;
+			if (soft) {
+				fs.open(localFile, "r", function(status, fd) {
+					if (status)
+						return cb(status);
+					var buffer = new Buffer(4);
+					fs.read(fd, buffer, 0, 4, 0, function(err, num) {
+						if (buffer.toString("utf8", 0, num) == "<Err") {
+							console.log("importing " + jar);
+							fs.createReadStream(jar).pipe(fs.createWriteStream(localFile)).on("finish", cb);
+						} else {
+							cb();
+						}
+					});
+				});
+			} else {
+				console.log("mkdir " + localFolder);
+				if (fs.existsSync(localFolder)) {
+					console.log("importing " + jar);
+					fs.createReadStream(jar).pipe(fs.createWriteStream(localFile)).on("finish", cb);
+				} else {
+					mkdirp(localFolder, function(err) {
+						if (err) return cb(err);
+						console.log("importing " + jar);
+						fs.createReadStream(jar).pipe(fs.createWriteStream(localFile)).on("finish", cb);
+					});
+				}
+			}
+		});
+	}
+</script>

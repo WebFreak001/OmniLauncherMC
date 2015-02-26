@@ -1,7 +1,11 @@
 var fs = require("fs");
+var path = require("path");
 var request = require("request");
 var config = {};
 var body;
+
+if (require("nw.gui").App.argv[0] != "true")
+	process.chdir(path.dirname(process.execPath));
 
 function ajax(page, cb)
 {
@@ -134,6 +138,8 @@ function generateAccessToken(savePw, username, password, cb)
 		}
 	}, function (error, response, body)
 	{
+		if (!body)
+			return cb(false);
 		if (body.error)
 		{
 			if (cb) cb(false);

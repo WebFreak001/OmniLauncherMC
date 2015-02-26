@@ -28,6 +28,8 @@
 		case "win32":
 			mcFolder = path.join(process.env.APPDATA, ".minecraft/");
 			break;
+		default:
+			throw "Unsupported platform: " + os.platform();
 	}
 	var launcher_config;
 	var latest = "1.8.1";
