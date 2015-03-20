@@ -3,18 +3,23 @@
 
 <head>
 	<title>Minecraft Output</title>
+	<meta charset="utf-8">
 	<script src="../public/js/jquery.min.js"></script>
 	<script>
 		var gui = require("nw.gui");
 
 		function load() {
 			global.logger.on("out", function(data) {
-				$("#messages").append("<tr class='out'><td>INFO</td><td>" + data + "</td></tr>");
-				window.scrollTo(0, document.body.scrollHeight);
+				try {
+					$("#messages").append("<tr class='out'><td>INFO</td><td>" + data + "</td></tr>");
+					window.scrollTo(0, document.body.scrollHeight);
+				} catch (e) {}
 			});
 			global.logger.on("err", function(data) {
-				$("#messages").append("<tr class='err'><td>ERROR</td><td>" + data + "</td></tr>");
-				window.scrollTo(0, document.body.scrollHeight);
+				try {
+					$("#messages").append("<tr class='err'><td class='err'>ERROR</td><td>" + data + "</td></tr>");
+					window.scrollTo(0, document.body.scrollHeight);
+				} catch (e) {}
 			});
 			gui.Window.get().show();
 		}

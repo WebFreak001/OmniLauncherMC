@@ -1,43 +1,82 @@
 var mcStatus;
 var lastStatusCheck = 0;
 var Launcher = require("./public/js/minecraft-launcher.js");
+var gui = require("nw.gui");
+var mcID = 0;
 
 function loadModPacks()
 {
-	$("#username").text(config.minecraft.name);
-	$("#packs").html("");
-	for (var i = 0; i < config.packs.length; i++)
+	$("#packs").html('<div class="pack defaultAdd" onclick="showPackDialog();" title="Create Pack"><div class="text">CREATE PACK</div><div class="clear"></div></div>');
+	for (var i = config.packs.length - 1; i >= 0; i--)
 	{
-		$("#packs").append("<div class='pack' id='pack" + i + "' style='background-image: url(" + config.packs[i].background + ")' onclick='selectPack(" + i + ")' title='" + config.packs[i].name + "'><img src='" + config.packs[i].thumb + "' alt='" + config.packs[i].type + "'><div class='text'>" + config.packs[i].name + "</div><div class='clear'></div></div>");
+		$("#packs").prepend("<div class='pack' id='pack" + i +
+			"' onclick='selectPack(" + i +
+			")' style='background-image: url(" + config.packs[i].background +
+			")' title='" + config.packs[i].name +
+			"' oncontextmenu='event.preventDefault(); showContext(event.x, event.y, " + i + ")'><div class='text'>" + config.packs[i].name +
+			"</div><div class='clear'></div><div class='config fa fa-cog' onclick='event.stopPropagation(); configPack(" + i +
+			")'></div></div>");
 	}
-	if (config.packs.length === 0)
+}
+
+function showContext(x, y, id)
+{
+	var menu = new gui.Menu();
+
+	var edit = new gui.MenuItem(
 	{
-		$("#packs").html("<span class='desc'>Nothing added. Click the button below to add some modpacks or profiles.</span>");
-	}
-	else
-		selectPack(0);
+		label: "Edit"
+	});
+	edit.click = function ()
+	{
+		configPack(id);
+	};
+
+	menu.append(edit);
+
+	var del = new gui.MenuItem(
+	{
+		label: "Delete"
+	});
+	del.click = function ()
+	{
+		config.packs.splice(id, 1);
+		save();
+		ajax("views/main.html");
+	};
+
+	menu.append(del);
+	menu.popup(x, y);
+}
+
+function configPack(id)
+{
+	global.packId = id;
+
+	$("#addPack").css(
+	{
+		display: "block"
+	});
+	$("#pack-content").html("");
+	$("#addPack .modal").addClass("slideInDown");
+	setModalActions("save-cancel");
+	setModalPage("views/configPack.html", "Configuration for Pack #" + id);
 }
 
 function selectPack(id)
 {
 	var pack = config.packs[id];
-	for (var i = 0; i < config.packs.length; i++)
-	{
-		$("#pack" + i).removeClass("active");
-	}
-	$("#pack" + id).addClass("active");
 	if (pack.type == "vanilla")
 	{
-		$("#preview").html([
-			"<div class='vanilla-container' style='background-image: url(" + pack.background + ");'>",
-			"	<div class='name'>",
-			"		<img class='icon' src='" + pack.thumb + "'/>",
-			"		" + pack.name,
-			"		<div class='badges'>",
-			"		" + (pack.modded == "true" ? "<div class='badge'>Modded</div>" : (pack.modded == "false" ? "<div class='badge'>Vanilla</div>" : "")),
-			"		<div class='clear'></div>",
-			"		</div>",
-			"	</div>",
+		$("#addPack").css(
+		{
+			display: "block"
+		});
+		$("#pack-content").html("");
+		$("#addPack .modal").addClass("slideInDown");
+		setModalActions("import-play-close");
+		setModalContent([
+			"<div class='vanilla-container'>",
 			"	<div class='content'>",
 			"		<div class='info'>",
 			"		" + pack.description,
@@ -51,16 +90,12 @@ function selectPack(id)
 			"			</div>",
 			"			<div class='clear'></div>",
 			"		</div>",
-			"		<div class='actions'>",
-			"			<div class='button tealButton' onclick='startMinecraft(" + id + ")'>PLAY</div>",
-			"			<div class='button tealButton' onclick='importLibs()' title='This is necessary if you imported a modded version of Minecraft'>IMPORT LIBRARIES</div>",
-			"		</div>",
 			"		<div class='clear'></div>",
 			"	</div>",
 			"</div>"
-		].join("\n"));
+		].join("\n"), pack.name, checkStatus);
+		mcID = id;
 	}
-	checkStatus();
 }
 
 function checkStatus()
@@ -117,8 +152,26 @@ function displayStatus()
 	}
 }
 
-function setModalPage(page)
+function setModalActions(actions)
 {
+	$(".footer-actions").css(
+	{
+		display: "none"
+	});
+	$("#modal-" + actions).css(
+	{
+		display: "block"
+	});
+}
+
+function setModalTitle(title)
+{
+	$("#pack-title").text(title);
+}
+
+function setModalPage(page, title)
+{
+	setModalTitle(title);
 	$("#pack-content").removeAttr("class");
 	$("#pack-content").addClass("animated fadeOut");
 	setTimeout(function ()
@@ -133,6 +186,20 @@ function setModalPage(page)
 	}, 1000);
 }
 
+function setModalContent(content, title, cb)
+{
+	setModalTitle(title);
+	$("#pack-content").removeAttr("class");
+	$("#pack-content").addClass("animated fadeOut");
+	setTimeout(function ()
+	{
+		$("#pack-content").html(content);
+		$("#pack-content").removeAttr("class");
+		$("#pack-content").addClass("animated fadeIn");
+		if (cb) cb();
+	}, 1000);
+}
+
 function showPackDialog()
 {
 	$("#addPack").css(
@@ -141,7 +208,8 @@ function showPackDialog()
 	});
 	$("#pack-content").html("");
 	$("#addPack .modal").addClass("slideInDown");
-	setModalPage("views/createPack.html");
+	setModalActions("next-cancel");
+	setModalPage("views/createPack.html", "Pack Creation");
 }
 
 function hidePackDialog()
@@ -154,3 +222,23 @@ function hidePackDialog()
 }
 
 loadModPacks();
+$("#packs").sortable(
+{
+	items: ".pack:not(.defaultAdd)",
+	stop: function (event, ui)
+	{
+		var oldPacks = config.packs;
+		var newPacks = [];
+		var i = 0;
+		$("#packs .pack:not(.defaultAdd)").each(function ()
+		{
+			var id = parseInt(this.id.substr(4));
+			this.id = "pack" + i;
+			i++;
+			newPacks.push(oldPacks[id]);
+		});
+		config.packs = newPacks;
+		save();
+	}
+});
+$("#packs").disableSelection();

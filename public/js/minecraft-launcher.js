@@ -20,6 +20,9 @@ var MinecraftLauncher = (function () {
         var that = this;
         global.logger = new EventEmitter();
         var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
+        loggerWindow.on("closed", function () {
+            loggerWindow = null;
+        });
         dependencyLoader.loadAll(this.gameConf, function () {
             progress(1);
             global.logger.emit("out", "Downloaded all dependencies");
@@ -80,11 +83,8 @@ var MinecraftLauncher = (function () {
                     });
                     java.on("close", function (code) {
                         gui.Window.get().show();
-                        try {
+                        if (loggerWindow != null)
                             loggerWindow.close();
-                        }
-                        catch (e) {
-                        }
                         console.log("Java closed with error code " + code);
                     });
                 });

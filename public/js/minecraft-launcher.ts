@@ -30,6 +30,7 @@ class MinecraftLauncher {
         var that = this;
         global.logger = new EventEmitter();
         var loggerWindow = gui.Window.open("views/mc-console.html", { show: false, toolbar: false });
+        loggerWindow.on("closed", function() { loggerWindow = null; });
         dependencyLoader.loadAll(this.gameConf, function() {
             progress(1);
             global.logger.emit("out", "Downloaded all dependencies");
@@ -89,7 +90,12 @@ class MinecraftLauncher {
                     var java = spawn("java", args);
                     java.stdout.on("data", function(data) { global.logger.emit("out", data); console.log("OUT: " + data); out(data); });
                     java.stderr.on("data", function(data) { global.logger.emit("err", data); console.log("ERR: " + data); err(data); });
-                    java.on("close", function(code) { gui.Window.get().show(); try { loggerWindow.close(); } catch (e) { } console.log("Java closed with error code " + code); });
+                    java.on("close", function(code) {
+                        gui.Window.get().show();
+                        if (loggerWindow != null)
+                            loggerWindow.close();
+                        console.log("Java closed with error code " + code);
+                    });
                 });
             });
         });

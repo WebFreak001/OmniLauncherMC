@@ -1,31 +1,29 @@
 <div id="addPack" class="addPack" style="display: none;">
 	<div class="modal animated">
-		<h1>Pack Creation</h1>
+		<h1 id="pack-title">Pack Creation</h1>
 		<div id="pack-content">
 		</div>
 		<div class="footer">
-			<button onclick="(next || function() {})();" style="margin-right: 4px;">NEXT</button>
-			<button onclick="hidePackDialog()">CANCEL</button>
+			<div class="footer-actions" id="modal-next-cancel" style="display: none">
+				<button onclick="if(next) next();" style="margin-right: 4px;">NEXT</button>
+				<button onclick="hidePackDialog()">CANCEL</button>
+			</div>
+			<div class="footer-actions" id="modal-save-cancel" style="display: none">
+				<button onclick="if(saveModal) saveModal();" style="margin-right: 4px;">SAVE</button>
+				<button onclick="hidePackDialog()">CANCEL</button>
+			</div>
+			<div class="footer-actions" id="modal-import-play-close" style="display: none">
+				<button onclick="hidePackDialog()">CLOSE</button>
+				<button onclick="startMinecraft(mcID)">PLAY</button>
+				<button onclick="importLibs()" title="This is necessary if you imported a modded version of Minecraft">IMPORT LIBRARIES</button>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="modpacks">
 	<div class="packs">
-		<div class="left">
-			<div id="packs">
-			</div>
-			<button class="create-pack tealButton" onclick="showPackDialog();">CREATE PACK</button>
-		</div>
-		<div id="preview">
+		<div id="packs">
 		</div>
 	</div>
-	<div class="footer">
-		<div class="left">
-			<div id="username">Loading...</div>
-		</div>
-		<div class="right">
-			v0.0.1 - Logout
-		</div>
-	</div>
-	<script src="public/js/modpacks.js"></script>
+	<script src="public/js/modpacks.min.js"></script>
 </div>

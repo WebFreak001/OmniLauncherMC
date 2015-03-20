@@ -1,19 +1,26 @@
-@import url(roboto.css);
+@import url(roboto.min.css);
+@import url(sourcecodepro.min.css);
+@import url(font-awesome.min.css);
 @import url(modpacks.css);
 body, html {
 	font-family: Roboto, sans-serif;
+	font-size: 12pt;
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	background-color: #263238;
+	background-color: #EEE;
 	overflow-x: hidden;
+}
+input, button {
+	font-family: Roboto, sans-serif;
+	font-size: 1em;
 }
 .clear {
 	clear: both;
 }
 .login {
-	background-color: #37474F;
-	color: white;
+	background-color: #FFF;
+	color: black;
 	width: 100%;
 	max-width: 800px;
 	position: absolute;
@@ -22,7 +29,7 @@ body, html {
 	top: 0;
 	bottom: 0;
 	margin: auto;
-	box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 	border-radius: 2px;
 	-webkit-user-select: none;
 	cursor: default;
@@ -30,7 +37,7 @@ body, html {
 	box-sizing: border-box;
 }
 .login h1 {
-	color: #80CBC4;
+	color: #009688;
 	text-align: center;
 	font-weight: 300;
 	margin: 0;
@@ -42,12 +49,12 @@ body, html {
 	font-weight: 300;
 	margin: 0;
 	padding-bottom: 4px;
-	font-size: 1.4em;
+	font-size: 1.3em;
 }
 .login .left {
 	float: left;
 	width: 50%;
-	border-right: 1px solid #263238;
+	border-right: 1px solid #E0E0E0;
 	box-sizing: border-box;
 	padding: 8px;
 	padding-bottom: 0;
@@ -73,13 +80,13 @@ body, html {
 	display: block;
 	width: 100%;
 	margin-bottom: 9px;
-	background-color: #455A64;
+	background-color: white;
 	outline: none;
 	padding: 6px;
 	border: none;
-	color: white;
+	color: black;
 	box-sizing: border-box;
-	border-bottom: 1px solid #263238;
+	border-bottom: 1px solid #E0E0E0;
 }
 .login .left input.full:focus {
 	border-bottom: 2px solid #80CBC4;
@@ -96,44 +103,48 @@ body, html {
 	display: block;
 	padding: 4px;
 	cursor: pointer;
+	color: black;
 }
 .login .right label.active {
-	background-color: #455A64;
+	background-color: rgba(153, 153, 153, 0.2);
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-	color: white;
 }
 .login button {
-	font-family: Roboto, sans-serif;
 	display: block;
-	outline: none;
 	width: calc(100% - 16px);
 	padding: 8px 0;
-	border: none;
-	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-	text-align: center;
-	cursor: pointer;
 	position: absolute;
 	bottom: 0;
 	box-sizing: border-box;
 }
-.login button:hover {
-	background-color: #26A69A;
-}
 .tealButton {
 	background-color: #009688;
+	border: none;
 	color: white;
 	cursor: pointer;
+	text-align: center;
+	outline: none;
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
 }
-.tealButton:hover {
-	background-color: #4DB6AC;
+.tealButton:hover, .tealButton:focus {
+	background-color: #00897B;
 }
-.commonButton {
+.tealButton:active {
+	background-color: #00796B;
+}
+.flatButton {
+	background-color: transparent;
+	cursor: pointer;
+	color: #009688;
 	outline: none;
-	border: none;
-	padding: 4px 6px;
-	font-size: 1em;
 	text-align: center;
+	border: none;
+}
+.flatButton:hover, .flatButton:focus {
+	background-color: rgba(153, 153, 153, 0.2);
+}
+.flatButton:active {
+	background-color: rgba(153, 153, 153, 0.4);
 }
 .commonButton.big {
 	padding: 8px 20px;
@@ -160,6 +171,15 @@ input[type="checkbox"]:checked {
 	font-size: 1em;
 	height: 30px;
 	line-height: 30px;
+	background-color: white;
+	outline: none;
+	padding: 6px;
+	border: none;
+	color: black;
+	border-bottom: 1px solid #E0E0E0;
+}
+.fileViewText:focus {
+	border-bottom: 2px solid #80CBC4;
 }
 .fileViewButton {
 	box-sizing: border-box;
@@ -171,6 +191,80 @@ input[type="checkbox"]:checked {
 	height: 30px;
 	line-height: 30px;
 	float: right;
+}
+.tabs {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 18px 16px 0;
+	background-color: #009688;
+	margin: 0;
+	color: white;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+	-webkit-user-select: none;
+	cursor: default;
+}
+.tabs .wrapper {
+	width: 100%;
+	margin: auto;
+	max-width: 1000px;
+}
+.tabs h1 {
+	margin: 0;
+	padding: 0;
+	font-weight: 300;
+	font-size: 1.6em;
+}
+.tabs ul {
+	margin-top: 10px;
+	padding: 0;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	list-style: none;
+	width: 100%;
+	max-width: 600px;
+}
+.tabs ul li {
+	font-weight: 300;
+	text-transform: uppercase;
+	font-size: 1.3em;
+	padding: 8px 10px;
+	text-align: center;
+	cursor: pointer;
+	border-bottom: 4px solid transparent;
+	color: rgba(255, 255, 255, 0.7);
+}
+.tabs ul li.active, .tabs ul li:hover {
+	color: white;
+	border-bottom: 4px solid #4fc3f7;
+}
+.main .footer {
+	height: 40px;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	line-height: 40px;
+	background-color: #009688;
+	color: white;
+}
+.main .footer .wrapper {
+	width: 100%;
+	margin: auto;
+	max-width: 1000px;
+}
+.main .footer .left {
+	float: left;
+	padding: 0 8px;
+}
+.main .footer .right {
+	float: right;
+	padding: 0 8px;
 }
 ::-webkit-scrollbar {
 	width: 10px;

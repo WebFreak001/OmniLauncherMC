@@ -14,7 +14,7 @@
 	},
 	"window":
 	{
-		"show": true,
+		"show": false,
 		"toolbar": true,
 		"position": "center",
 		"width": 1000,

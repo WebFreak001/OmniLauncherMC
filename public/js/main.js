@@ -4,6 +4,18 @@ var request = require("request");
 var config = {};
 var body;
 
+window.ondragover = function (e)
+{
+	e.preventDefault();
+	return false;
+};
+
+window.ondrop = function (e)
+{
+	e.preventDefault();
+	return false;
+};
+
 if (require("nw.gui").App.argv[0] != "true")
 	process.chdir(path.dirname(process.execPath));
 
@@ -82,7 +94,7 @@ function launch(cb)
 		if (!valid)
 			loadLogin(cb);
 		else
-			ajax("views/modpacks.html", cb);
+			ajax("views/main.html", cb);
 	});
 }
 
@@ -119,6 +131,27 @@ function selectProfile(id)
 	if (config.users[id])
 		config.minecraft = config.users[id];
 	save();
+}
+
+function logout()
+{
+	request.post(
+	{
+		url: "https://authserver.mojang.com/invalidate",
+		json:
+		{
+			"agent":
+			{
+				"name": "Minecraft",
+				"version": 1
+			},
+			"accessToken": config.minecraft.accessToken,
+			"clientToken": config.minecraft.clientToken
+		}
+	}, function (err, res, body)
+	{
+		loadLogin();
+	});
 }
 
 function generateAccessToken(savePw, username, password, cb)
